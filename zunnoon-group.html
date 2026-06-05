@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zunnoon Group — Building Better Tomorrows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  :root {
+    --gold: #C8960A;
+    --gold-light: #E8B420;
+    --gold-pale: rgba(200,150,10,0.12);
+    --navy: #0A1628;
+    --navy-mid: #0D1E38;
+    --navy-light: #112340;
+    --white: #FFFFFF;
+    --white-60: rgba(255,255,255,0.6);
+    --white-40: rgba(255,255,255,0.4);
+    --white-20: rgba(255,255,255,0.2);
+    --white-10: rgba(255,255,255,0.08);
+    --gold-border: rgba(200,150,10,0.2);
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── UTILITY BAR ── */
+  .util-bar {
+    background: var(--navy);
+    border-bottom: 1px solid var(--gold-border);
+    padding: 7px clamp(16px, 4vw, 40px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--white-60);
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .util-bar a { color: var(--white-60); text-decoration: none; }
+  .util-contact { display: flex; gap: 20px; flex-wrap: wrap; }
+  .util-contact span { display: flex; align-items: center; gap: 5px; }
+  .util-contact i { color: var(--gold); font-size: 13px; }
+  .util-social { display: flex; gap: 14px; }
+  .util-social i { font-size: 14px; cursor: pointer; transition: color var(--transition); }
+  .util-social i:hover { color: var(--gold); }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,22,40,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--gold-border);
+    padding: 14px clamp(16px, 4vw, 40px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-mark {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 18px; color: var(--navy); font-weight: 600;
+    flex-shrink: 0;
+  }
+  .nav-logo-text { font-family: var(--font-display); font-size: 17px; color: var(--white); }
+  .nav-logo-text span { color: var(--gold); }
+  .nav-logo-sub { font-size: 9px; letter-spacing: .18em; color: var(--white-40); text-transform: uppercase; display: block; }
+
+  .nav-links {
+    display: flex;
+    gap: clamp(14px, 2.5vw, 28px);
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 12px;
+    color: var(--white-60);
+    text-decoration: none;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    transition: color var(--transition);
+    white-space: nowrap;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 9px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--transition), transform var(--transition);
+    flex-shrink: 0;
+  }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--white-60);
+    transition: var(--transition);
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--gold-border);
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.2s;
+  }
+  .mobile-menu.open { max-height: 400px; padding: 12px 0; }
+  .mobile-menu a {
+    display: block;
+    padding: 12px clamp(16px, 4vw, 40px);
+    font-size: 13px;
+    color: var(--white-60);
+    text-decoration: none;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: color var(--transition), background var(--transition);
+  }
+  .mobile-menu a:hover { color: var(--gold); background: var(--gold-pale); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: clamp(520px, 80vh, 720px);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: clamp(40px, 8vw, 90px) clamp(16px, 4vw, 40px);
+    gap: 40px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--gold-border);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 50%, rgba(200,150,10,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(10,30,80,0.8) 0%, transparent 50%),
+      url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=80') center/cover no-repeat;
+    filter: brightness(0.35) saturate(0.8);
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(10,22,40,0.95) 40%, transparent 100%);
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 560px; }
+  .hero-label {
+    font-size: 10px;
+    letter-spacing: .28em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-label::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--gold);
+    display: block;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5.5vw, 62px);
+    font-weight: 600;
+    line-height: 1.07;
+    letter-spacing: -.02em;
+    margin-bottom: 18px;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero-sub {
+    font-size: clamp(13px, 1.5vw, 15px);
+    color: var(--white-60);
+    max-width: 400px;
+    line-height: 1.75;
+    margin-bottom: 32px;
+  }
+
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-gold {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 13px 28px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+    display: flex; align-items: center; gap: 7px;
+  }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--white-60);
+    border: 1px solid var(--white-20);
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 13px 24px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition), transform var(--transition);
+    display: flex; align-items: center; gap: 7px;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  /* Quick inquiry form */
+  .hero-form-wrap {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    width: clamp(240px, 28vw, 300px);
+  }
+  .quick-form {
+    background: rgba(13,30,56,0.92);
+    border: 1px solid var(--gold-border);
+    border-radius: 6px;
+    padding: 24px 20px;
+    backdrop-filter: blur(12px);
+  }
+  .quick-form h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .quick-form p { font-size: 11px; color: var(--white-40); margin-bottom: 18px; }
+  .form-field {
+    margin-bottom: 10px;
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 3px;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 12px;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color var(--transition);
+    -webkit-appearance: none;
+  }
+  .form-field input::placeholder,
+  .form-field textarea::placeholder { color: var(--white-40); }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus { border-color: var(--gold); }
+  .form-field select option { background: var(--navy-mid); color: var(--white); }
+  .form-field textarea { resize: none; height: 72px; }
+  .form-submit {
+    width: 100%;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background var(--transition);
+  }
+  .form-submit:hover { background: var(--gold-light); }
+
+  /* ── STATS ── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    background: var(--gold-border);
+    border-bottom: 1px solid var(--gold-border);
+  }
+  .stat-cell {
+    padding: clamp(20px, 3vw, 36px) clamp(16px, 3vw, 32px);
+    background: rgba(8,18,40,0.97);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: background var(--transition);
+  }
+  .stat-cell::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+  .stat-cell:hover { background: rgba(200,150,10,0.06); }
+  .stat-cell:hover::before { width: 60%; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 44px);
+    color: var(--gold);
+    font-weight: 600;
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-icon { font-size: 22px; color: var(--gold); opacity: 0.5; display: block; margin-bottom: 8px; }
+  .stat-label { font-size: 10px; color: var(--white-40); letter-spacing: .1em; text-transform: uppercase; }
+
+  /* ── SECTION WRAPPER ── */
+  .section {
+    padding: clamp(48px, 8vw, 80px) clamp(16px, 4vw, 40px);
+    border-bottom: 1px solid rgba(200,150,10,0.07);
+  }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: .28em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before { content: ''; width: 22px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.5vw, 34px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    margin-bottom: 10px;
+  }
+  .section-title em { color: var(--gold); font-style: normal; }
+  .section-sub { font-size: 13px; color: var(--white-40); max-width: 420px; line-height: 1.75; }
+
+  /* ── PROJECTS ── */
+  .projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 36px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .project-card {
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--gold-border);
+    background: var(--navy-light);
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+    cursor: pointer;
+  }
+  .project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(200,150,10,0.45);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .project-img {
+    height: clamp(160px, 22vw, 220px);
+    position: relative;
+    overflow: hidden;
+  }
+  .project-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+  }
+  .project-card:hover .project-img img { transform: scale(1.08); }
+  .project-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,22,40,0.7) 0%, transparent 50%);
+    transition: opacity var(--transition);
+  }
+  .project-card:hover .project-img-overlay { opacity: 0.5; }
+  .project-tag-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 9px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .project-body { padding: 18px 20px 20px; }
+  .project-name { font-family: var(--font-display); font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+  .project-loc {
+    font-size: 11px;
+    color: var(--white-40);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .project-loc i { color: var(--gold); font-size: 12px; }
+
+  /* ── DIVISIONS ── */
+  .div-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 40px;
+  }
+  .div-card {
+    background: var(--white-10);
+    border: 1px solid var(--gold-border);
+    border-radius: 6px;
+    padding: 22px 18px;
+    cursor: pointer;
+    transition: border-color var(--transition), background var(--transition), transform var(--transition);
+  }
+  .div-card:hover {
+    border-color: rgba(200,150,10,0.5);
+    background: rgba(200,150,10,0.07);
+    transform: translateY(-3px);
+  }
+  .div-icon {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,150,10,0.4);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .div-card:hover .div-icon { background: var(--gold-pale); border-color: var(--gold); }
+  .div-icon i { font-size: 16px; color: var(--gold); }
+  .div-name { font-size: 13px; font-weight: 500; line-height: 1.4; margin-bottom: 4px; }
+  .div-cat { font-size: 10px; color: var(--white-40); letter-spacing: .1em; text-transform: uppercase; }
+
+  /* ── WHY ── */
+  .why-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(30px, 6vw, 70px);
+    align-items: start;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .why-item {
+    background: var(--white-10);
+    border: 1px solid var(--gold-border);
+    border-radius: 6px;
+    padding: 22px 18px;
+    transition: border-color var(--transition), transform var(--transition);
+  }
+  .why-item:hover { border-color: rgba(200,150,10,0.45); transform: translateY(-2px); }
+  .why-num {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: rgba(200,150,10,0.22);
+    margin-bottom: 10px;
+  }
+  .why-ttl { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .why-body { font-size: 12px; color: var(--white-40); line-height: 1.7; }
+  .stat-highlight {
+    margin-top: 24px;
+    padding: 20px 22px;
+    border: 1px solid var(--gold-border);
+    border-radius: 4px;
+    background: var(--gold-pale);
+  }
+  .stat-highlight-num {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .stat-highlight-label { font-size: 11px; color: var(--white-40); margin-top: 4px; letter-spacing: .06em; }
+
+  /* ── TESTIMONIALS ── */
+  .test-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .test-card {
+    background: var(--white-10);
+    border: 1px solid var(--gold-border);
+    border-radius: 6px;
+    padding: 26px 22px;
+    transition: border-color var(--transition), transform var(--transition);
+  }
+  .test-card:hover { border-color: rgba(200,150,10,0.4); transform: translateY(-2px); }
+  .test-stars { display: flex; gap: 3px; margin-bottom: 14px; }
+  .test-stars i { color: var(--gold); font-size: 13px; }
+  .test-quote { font-size: 13px; color: var(--white-60); line-height: 1.8; font-style: italic; margin-bottom: 20px; }
+  .test-author { display: flex; align-items: center; gap: 12px; }
+  .test-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--gold-pale);
+    border: 1px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--gold); font-weight: 500;
+    flex-shrink: 0;
+  }
+  .test-name { font-size: 13px; font-weight: 500; }
+  .test-role { font-size: 10px; color: var(--white-40); margin-top: 2px; letter-spacing: .05em; }
+
+  /* ── BRANDS STRIP ── */
+  .brands {
+    padding: clamp(24px, 4vw, 40px) clamp(16px, 4vw, 40px);
+    border-bottom: 1px solid var(--gold-border);
+    background: rgba(200,150,10,0.03);
+  }
+  .brands-label { text-align: center; font-size: 10px; letter-spacing: .22em; color: var(--white-40); text-transform: uppercase; margin-bottom: 22px; }
+  .brands-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(16px, 4vw, 40px);
+  }
+  .brand-pill {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid var(--gold-border);
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-size: 11px;
+    color: var(--white-60);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: border-color var(--transition), color var(--transition);
+  }
+  .brand-pill:hover { border-color: var(--gold); color: var(--gold); }
+  .brand-pill i { color: var(--gold); font-size: 15px; }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: clamp(60px, 10vw, 100px) clamp(16px, 4vw, 40px);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--gold-border);
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(280px, 50vw, 500px);
+    height: clamp(280px, 50vw, 500px);
+    border: 1px solid rgba(200,150,10,0.08);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .cta-section::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(160px, 30vw, 320px);
+    height: clamp(160px, 30vw, 320px);
+    border: 1px solid rgba(200,150,10,0.06);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .cta-content { position: relative; z-index: 2; }
+  .cta-section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 600;
+    max-width: 500px;
+    margin: 0 auto 12px;
+    line-height: 1.2;
+  }
+  .cta-section p { color: var(--white-40); font-size: 14px; margin: 0 auto 36px; max-width: 340px; line-height: 1.75; }
+  .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ── FOOTER ── */
+  .footer { padding: clamp(40px, 6vw, 60px) clamp(16px, 4vw, 40px) 28px; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: clamp(24px, 4vw, 50px);
+    margin-bottom: 40px;
+  }
+  .footer-brand {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .footer-about { font-size: 12px; color: var(--white-40); line-height: 1.8; max-width: 220px; }
+  .footer-col h4 { font-size: 10px; color: rgba(200,150,10,0.7); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 12px; color: var(--white-40); margin-bottom: 9px; text-decoration: none; transition: color var(--transition); }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-newsletter input {
+    width: 100%;
+    background: var(--white-10);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 3px;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 12px;
+    padding: 9px 12px;
+    outline: none;
+    margin-bottom: 8px;
+    transition: border-color var(--transition);
+  }
+  .footer-newsletter input:focus { border-color: var(--gold); }
+  .footer-newsletter input::placeholder { color: var(--white-40); }
+  .footer-newsletter button {
+    width: 100%;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 9px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background var(--transition);
+  }
+  .footer-newsletter button:hover { background: var(--gold-light); }
+  .footer-contact-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--white-40); margin-bottom: 8px; }
+  .footer-contact-item i { color: var(--gold); font-size: 14px; flex-shrink: 0; }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--gold-border);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.22); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 11px; color: rgba(255,255,255,0.25); text-decoration: none; transition: color var(--transition); }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-social { display: flex; gap: 14px; }
+  .footer-social i { font-size: 17px; color: var(--white-40); cursor: pointer; transition: color var(--transition); }
+  .footer-social i:hover { color: var(--gold); }
+
+  /* ── FADE-IN ANIMATION ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE BREAKPOINTS ── */
+  @media (max-width: 900px) {
+    .util-bar { display: none; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu { display: flex; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-form-wrap { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .why-wrap { grid-template-columns: 1fr; gap: 32px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .div-grid { grid-template-columns: 1fr 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .hero h1 { font-size: 32px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .cta-btns { flex-direction: column; align-items: center; }
+    .cta-btns button { width: 100%; max-width: 280px; }
+  }
+
+  @media (max-width: 380px) {
+    .div-grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .hero-actions { flex-direction: column; }
+    .hero-actions button { width: 100%; justify-content: center; }
+  }
+
+  /* ── SCROLL PROGRESS ── */
+  .scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    z-index: 200;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* WhatsApp float */
+  .wa-float {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: 50px; height: 50px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 150;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+    transition: transform var(--transition);
+  }
+  .wa-float:hover { transform: scale(1.1); }
+  .wa-float i { font-size: 24px; color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- UTILITY BAR -->
+<div class="util-bar">
+  <div class="util-contact">
+    <span><i class="ti ti-phone"></i> +92 300 1234567</span>
+    <span><i class="ti ti-mail"></i> info@zunnoongroup.com</span>
+    <span><i class="ti ti-clock"></i> Mon–Sat: 9:00 AM – 7:00 PM</span>
+  </div>
+  <div class="util-social">
+    <i class="ti ti-brand-facebook" aria-hidden="true"></i>
+    <i class="ti ti-brand-instagram" aria-hidden="true"></i>
+    <i class="ti ti-brand-linkedin" aria-hidden="true"></i>
+    <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">Z</div>
+    <div>
+      <div class="nav-logo-text">Zunnoon <span>Group</span></div>
+      <span class="nav-logo-sub">Building Better Tomorrows</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="active">Home</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#divisions">Services</a></li>
+    <li><a href="#">About Us</a></li>
+    <li><a href="#">Blogs</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <button class="nav-cta">Get In Touch</button>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#">Home</a>
+  <a href="#projects">Projects</a>
+  <a href="#divisions">Services</a>
+  <a href="#">About Us</a>
+  <a href="#">Blogs</a>
+  <a href="#">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-label">Welcome to Zunnoon Group</div>
+    <h1>Building <em>Dreams,</em><br>Creating <em>Legacies</em></h1>
+    <p class="hero-sub">A diversified organisation delivering excellence in Real Estate, Construction, Marketing, Travel, Education &amp; more across Pakistan.</p>
+    <div class="hero-actions">
+      <button class="btn-gold"><i class="ti ti-building-skyscraper" aria-hidden="true"></i> Explore Projects</button>
+      <button class="btn-ghost"><i class="ti ti-grid-dots" aria-hidden="true"></i> Our Services</button>
+    </div>
+  </div>
+  <div class="hero-form-wrap">
+    <div class="quick-form">
+      <h3>Quick Inquiry</h3>
+      <p>Get a callback from our expert</p>
+      <div class="form-field"><input type="text" placeholder="Your Name"></div>
+      <div class="form-field"><input type="tel" placeholder="Phone Number"></div>
+      <div class="form-field">
+        <select>
+          <option value="" disabled selected>Select Service</option>
+          <option>Real Estate</option>
+          <option>Engineering</option>
+          <option>Travel & Tours</option>
+          <option>Education</option>
+          <option>Marketing</option>
+          <option>NaxGanic Products</option>
+        </select>
+      </div>
+      <div class="form-field"><textarea placeholder="Your Message"></textarea></div>
+      <button class="form-submit">Request Callback</button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-cell fade-up">
+    <i class="ti ti-users stat-icon" aria-hidden="true"></i>
+    <span class="stat-num" data-target="1500">0</span>
+    <div class="stat-label">Happy Clients</div>
+  </div>
+  <div class="stat-cell fade-up">
+    <i class="ti ti-building stat-icon" aria-hidden="true"></i>
+    <span class="stat-num" data-target="250">0</span>
+    <div class="stat-label">Projects Completed</div>
+  </div>
+  <div class="stat-cell fade-up">
+    <i class="ti ti-calendar-stats stat-icon" aria-hidden="true"></i>
+    <span class="stat-num" data-target="20">0</span>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat-cell fade-up">
+    <i class="ti ti-headset stat-icon" aria-hidden="true"></i>
+    <span class="stat-num">24/7</span>
+    <div class="stat-label">Customer Support</div>
+  </div>
+</div>
+
+<!-- FEATURED PROJECTS -->
+<section class="section" id="projects">
+  <div class="projects-header">
+    <div>
+      <div class="section-label">Portfolio</div>
+      <div class="section-title">Featured <em>Projects</em></div>
+    </div>
+    <button class="btn-ghost" style="font-size:10px;padding:9px 18px">View All <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card fade-up">
+      <div class="project-img">
+        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="Basharat Heights luxury apartments">
+        <div class="project-img-overlay"></div>
+        <span class="project-tag-badge">Residential</span>
+      </div>
+      <div class="project-body">
+        <div class="project-name">Basharat Heights</div>
+        <div class="project-loc"><i class="ti ti-map-pin"></i> Islamabad</div>
+        <p style="font-size:11px;color:var(--white-40);margin-top:8px;line-height:1.6">Luxury apartments with panoramic views and modern architecture in a prime location.</p>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-img">
+        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80" alt="Basharat Villas premium housing">
+        <div class="project-img-overlay"></div>
+        <span class="project-tag-badge">Premium Villas</span>
+      </div>
+      <div class="project-body">
+        <div class="project-name">Basharat Villas</div>
+        <div class="project-loc"><i class="ti ti-map-pin"></i> Rawalpindi</div>
+        <p style="font-size:11px;color:var(--white-40);margin-top:8px;line-height:1.6">Exclusive gated community offering spacious villas with contemporary design.</p>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-img">
+        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80" alt="Basharat Commercial spaces">
+        <div class="project-img-overlay"></div>
+        <span class="project-tag-badge">Commercial</span>
+      </div>
+      <div class="project-body">
+        <div class="project-name">Basharat Commercial</div>
+        <div class="project-loc"><i class="ti ti-map-pin"></i> Lahore</div>
+        <p style="font-size:11px;color:var(--white-40);margin-top:8px;line-height:1.6">Prime commercial spaces designed for businesses demanding class and functionality.</p>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-img">
+        <img src="https://images.unsplash.com/photo-1555636222-cae831e670b3?w=600&q=80" alt="Basharat Mall shopping">
+        <div class="project-img-overlay"></div>
+        <span class="project-tag-badge">Shopping Mall</span>
+      </div>
+      <div class="project-body">
+        <div class="project-name">Basharat Mall</div>
+        <div class="project-loc"><i class="ti ti-map-pin"></i> Gujranwala</div>
+        <p style="font-size:11px;color:var(--white-40);margin-top:8px;line-height:1.6">A landmark retail destination bringing world-class shopping to the region.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVISIONS -->
+<section class="section" id="divisions" style="background:rgba(200,150,10,0.02)">
+  <div class="section-label">Our Ecosystem</div>
+  <div class="section-title">Our <em>Services</em></div>
+  <div class="section-sub">From bricks to bookings — each division is a pillar of independent expertise within the Zunnoon umbrella.</div>
+  <div class="div-grid">
+    <div class="div-card fade-up">
+      <div class="div-icon"><i class="ti ti-building-estate" aria-hidden="true"></i></div>
+      <div class="div-name">Real Estate &amp; Builders</div>
+      <div class="div-cat">Real Estate</div>
+      <p style="font-size:11px;color:var(--white-40);margin-top:8px;line-height:1.6">Residential &amp; commercial projects with modern architecture.</p>
+    </div>
+    <div class="div-card fade-up">
+      <div class="div-icon"><i class="ti ti-crane" aria-hidden="true"></i></div>
+      <div class="div-name">Engineering</div>
+      <div class="div-cat">Engineering</div>
+      <p style="font-size:11px;color:var(--white-40);margin-top:8px;line-height:1.6">Engineering solutions with innovation and excellence.</p>
+    </div>
+    <div class="div-card fade-up">
+      <div class="div-icon"><i class="ti ti-speakerphone" aria-hidden="true"></i></div>
+      <div class="div-name">Marketing</div>
+      <div class="div-cat">Marketing</div>
+      <p style="font-size:11px;color:var(--white-40);margin-top:8px;line-height:1.6">Result-driven marketing strategies to grow your business.</p>
+    </div>
+    <div class="div-card fade-up">
+      <div class="div-icon"><i class="ti ti-school" aria-hidden="true"></i></div>
+      <div class="div-name">Education Consultant</div>
+      <div class="div-cat">Education</div>
+      <p style="font-size:11px;color:var(--white-40);margin-top:8px;line-height:1.6">Guiding students to build their future with the best opportunities.</p>
+    </div>
+    <div class="div-card fade-up">
+      <div class="div-icon"><i class="ti ti-plane-tilt" aria-hidden="true"></i></div>
+      <div class="div-name">Travel &amp; Tours</div>
+      <div class="div-cat">Travel</div>
+      <p style="font-size:11px;color:var(--white-40);margin-top:8px;line-height:1.6">Making your travel experiences comfortable and memorable.</p>
+    </div>
+    <div class="div-card fade-up">
+      <div class="div-icon"><i class="ti ti-bowl" aria-hidden="true"></i></div>
+      <div class="div-name">NaxGanic Products</div>
+      <div class="div-cat">Food &amp; Wellness</div>
+      <p style="font-size:11px;color:var(--white-40);margin-top:8px;line-height:1.6">Natural and premium quality foods &amp; cosmetics for wellbeing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="section">
+  <div class="why-wrap">
+    <div>
+      <div class="section-label">Our Edge</div>
+      <div class="section-title">Why Choose <em>Zunnoon</em> Group?</div>
+      <p style="font-size:13px;color:var(--white-40);margin-top:16px;line-height:1.8;max-width:380px">A 20-year track record across eight industries means we deliver not just a service, but an ecosystem of trust built on expertise and integrity.</p>
+      <div class="stat-highlight">
+        <div class="stat-highlight-num">98%</div>
+        <div class="stat-highlight-label">Client retention rate across all divisions</div>
+      </div>
+      <div class="stat-highlight" style="margin-top:12px">
+        <div class="stat-highlight-num">10+</div>
+        <div class="stat-highlight-label">Cities served across Pakistan</div>
+      </div>
+    </div>
+    <div class="why-grid">
+      <div class="why-item fade-up">
+        <div class="why-num">01</div>
+        <div class="why-ttl">Trusted Company</div>
+        <div class="why-body">A decade of trust and excellence across Pakistan.</div>
+      </div>
+      <div class="why-item fade-up">
+        <div class="why-num">02</div>
+        <div class="why-ttl">Quality Services</div>
+        <div class="why-body">We deliver top-notch services in every division.</div>
+      </div>
+      <div class="why-item fade-up">
+        <div class="why-num">03</div>
+        <div class="why-ttl">Expert Team</div>
+        <div class="why-body">Professional and experienced team members, always.</div>
+      </div>
+      <div class="why-item fade-up">
+        <div class="why-num">04</div>
+        <div class="why-ttl">Client Satisfaction</div>
+        <div class="why-body">Our clients are our priority in every project.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" style="background:rgba(200,150,10,0.02)">
+  <div class="section-label">Client Voices</div>
+  <div class="section-title">What Our Clients <em>Say</em></div>
+  <div class="test-grid">
+    <div class="test-card fade-up">
+      <div class="test-stars">
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+      </div>
+      <p class="test-quote">"Zunnoon Group helped us find the perfect investment. Highly professional team — exceeded every expectation."</p>
+      <div class="test-author">
+        <div class="test-avatar">AK</div>
+        <div>
+          <div class="test-name">Ali Khan</div>
+          <div class="test-role">Investor, Lahore</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card fade-up">
+      <div class="test-stars">
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+      </div>
+      <p class="test-quote">"Excellent construction quality and on-time delivery. Highly recommended for any real estate need."</p>
+      <div class="test-author">
+        <div class="test-avatar">SA</div>
+        <div>
+          <div class="test-name">Sara Ahmed</div>
+          <div class="test-role">Business Owner, Islamabad</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card fade-up">
+      <div class="test-stars">
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+        <i class="ti ti-star-filled" aria-hidden="true"></i>
+      </div>
+      <p class="test-quote">"Their customer support and dedication is truly commendable. Best travel packages in the market."</p>
+      <div class="test-author">
+        <div class="test-avatar">UB</div>
+        <div>
+          <div class="test-name">Usman Butt</div>
+          <div class="test-role">Client, Karachi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND PARTNERS -->
+<div class="brands">
+  <div class="brands-label">Our Divisions &amp; Partners</div>
+  <div class="brands-grid">
+    <div class="brand-pill"><i class="ti ti-building-estate" aria-hidden="true"></i> Basharat Sons Estate</div>
+    <div class="brand-pill"><i class="ti ti-crane" aria-hidden="true"></i> Basharat Engineering</div>
+    <div class="brand-pill"><i class="ti ti-compass" aria-hidden="true"></i> Qudrah Travel</div>
+    <div class="brand-pill"><i class="ti ti-plane-tilt" aria-hidden="true"></i> Zunnoon Travel</div>
+    <div class="brand-pill"><i class="ti ti-bowl" aria-hidden="true"></i> NaxGanic Foods</div>
+    <div class="brand-pill"><i class="ti ti-sparkles" aria-hidden="true"></i> NaxGanic Cosmetics</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-content">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px">Start Today</div>
+    <h2>Ready to build something <em style="color:var(--gold)">remarkable?</em></h2>
+    <p>Whether it's property, travel, education, or growth — Zunnoon Group is your partner at every step.</p>
+    <div class="cta-btns">
+      <button class="btn-gold"><i class="ti ti-message-circle" aria-hidden="true"></i> Start a Conversation</button>
+      <button class="btn-ghost"><i class="ti ti-grid-dots" aria-hidden="true"></i> Browse All Divisions</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Zunnoon Group</div>
+      <p class="footer-about">A diversified organisation working in Real Estate, Construction, Marketing, Education, Travel &amp; more. Lahore, Pakistan.</p>
+      <div class="footer-social" style="margin-top:16px">
+        <i class="ti ti-brand-facebook" aria-hidden="true"></i>
+        <i class="ti ti-brand-instagram" aria-hidden="true"></i>
+        <i class="ti ti-brand-linkedin" aria-hidden="true"></i>
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="#">Home</a>
+      <a href="#">Projects</a>
+      <a href="#">Services</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Blogs</a>
+    </div>
+    <div class="footer-col">
+      <h4>Our Services</h4>
+      <a href="#">Real Estate &amp; Builders</a>
+      <a href="#">Engineering</a>
+      <a href="#">Marketing</a>
+      <a href="#">Education Consultant</a>
+      <a href="#">Travel &amp; Tours</a>
+      <a href="#">NaxGanic Products</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Info</h4>
+      <div class="footer-contact-item"><i class="ti ti-phone" aria-hidden="true"></i> +92 300 1234567</div>
+      <div class="footer-contact-item"><i class="ti ti-mail" aria-hidden="true"></i> info@zunnoongroup.com</div>
+      <div class="footer-contact-item"><i class="ti ti-map-pin" aria-hidden="true"></i> 123, Business Bay, Gulberg, Lahore, Pakistan</div>
+      <h4 style="margin-top:18px;margin-bottom:12px">Newsletter</h4>
+      <div class="footer-newsletter">
+        <input type="email" placeholder="Your Email">
+        <button>Subscribe <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2024 Zunnoon Group. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms &amp; Conditions</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<div class="wa-float" title="Chat on WhatsApp">
+  <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
+</div>
+
+<script>
+  // Hamburger
+  const ham = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  ham.addEventListener('click', () => {
+    ham.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+
+  // Close mobile menu on link click
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    ham.classList.remove('open');
+    menu.classList.remove('open');
+  }));
+
+  // Scroll progress
+  const progress = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    progress.style.width = scrolled + '%';
+  }, { passive: true });
+
+  // Intersection observer for fade-ups
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Counter animation
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        if (!target) return;
+        let current = 0;
+        const step = Math.ceil(target / 50);
+        const suffix = target >= 1000 ? '+' : '+';
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = current.toLocaleString() + suffix;
+          if (current >= target) clearInterval(timer);
+        }, 35);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num[data-target]').forEach(el => counterObserver.observe(el));
+</script>
+</body>
+</html>
